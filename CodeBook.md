@@ -70,9 +70,9 @@ So only the **mean** and **standard deviation** variables were used for the tidy
 
 ## Data Transformation in the R script (step by step)
 
-1. If the original Data are not in the Working Directory, download the data and unzip it to the `UCI HAR Dataset` directory automatically.
+1. If the original Data are not in the Working Directory, the script download the data and unzip it automatically.
 2. Read the features.txt file into the featureDF dataframe to use it later as column name for the tidy dataset and use only the mean and std variables
-3. Extract activity labels into the dataframe activityDF
+3. Read the activity labels (activity_labels.txt) into the dataframe activityDF
 4. For each fileset (the training set and the test set)
 	- Read the activity label id file (train/y_train.txt and test/y_test.txt) into the yData dataframe
 	- Read the subject id file (train/subject_train.txt and test/subject_test.txt) into the subject dataframe
@@ -82,18 +82,18 @@ So only the **mean** and **standard deviation** variables were used for the tidy
 	- add the activity label id and the subject id to the xData
 	- all this substeps are realised by the read.and.create() function
 5. merge respectively bind the training and test set by row
-6. beautify the column names using the [CamelCase Syntax](http://en.wikipedia.org/wiki/CamelCase "CamelCase@Wiki")
+6. beautify the column names by using the [CamelCase Syntax](http://en.wikipedia.org/wiki/CamelCase "CamelCase@Wiki")
 	- eliminate parentheses
 	- eliminate hyphen-minus
 	- replace 't' at the beginning of the column name with 'time' (meaning time domain)
 	- replace 'f' at the beginning of the column name with 'freq' (meaning frequency domain)
-7. join the measurements dataframe xData with the activityDF by activity label id (corresponds to `SELECT * FROM xData, activityDF WHERE xData.activitylabelId = activityDF.activitylabelId`)
+7. join the measurements dataframe xData with the activityDF by activity label id (corresponds to `SELECT * FROM xData, activityDF WHERE xData.activityLabelId = activityDF.activityLabelId`)
 8. melting the data with the melt() function in the reshape2 package (if not installed, the script will download and install the package) by the two id variables subjectId and activitylabelName
-9. calculate the average of each measure variable for each activity and rebuild the tidy data with the dcast() function (also part of the the reshape2 package)
+9. calculate the average of each measure variable for each activity and rebuild the tidy data with the dcast() function (also part of the reshape2 package)
 10. delete the melted dataframe (no use anymore)
 11. write the tidy dataset to the working directory ("tidydataset.txt") using a comma seppareated file format with no string quotes.
 
-## Used Variables in the tidy dataset
+## Variables in the tidy dataset
 
 * subjectId ... Subject ID of the 30 volunteers within an age bracket of 19-48 years.
 * activityLabelName ... Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING). These labels are generated with the join/merge as described at point 7 in the Transformation chapter.
