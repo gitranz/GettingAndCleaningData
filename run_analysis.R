@@ -19,7 +19,7 @@ read.and.create <- function(fileset, fcolnames) {
         # load activity file for fileset train|test
         dataFile <- paste0(dirname, "y_", fileset, ".txt")
         yData <- read.table(dataFile, header=FALSE, 
-                            col.names=c("activityLableId"))
+                            col.names=c("activityLabelId"))
         
         # load subject file for fileset train|test
         dataFile <- paste0(dirname, "subject_", fileset, ".txt")
@@ -35,7 +35,7 @@ read.and.create <- function(fileset, fcolnames) {
         xData <- xData[ , fcolnames]
         
         # append the activityId and subjectId columns
-        xData$activityLableId <- yData$activityLableId
+        xData$activityLabelId <- yData$activityLabelId
         xData$subjectId <- subject$subjectId
         
         # return the extracted measurements
@@ -46,7 +46,7 @@ read.and.create <- function(fileset, fcolnames) {
 filename = "tidydataset.txt"
 dataDir <- "./UCI HAR Dataset"
 
-cat("Generate a tidy dataset and write to", filename, "\n")
+cat("Generate a tidy dataset and write it to the file", filename, "!\nPlease wait ...\n")
 
 if(!file.exists(dataDir)){
         cat("Download and unzip data in current working directory:\n", getwd(), "\n...\n")
@@ -69,7 +69,7 @@ filter.data.cols <- grep("mean\\(\\)|std\\(\\)", featureDF$featureName)
 # extract activity labels into a data.frame
 activityDF <- read.table(paste0(dataDir, "/", "activity_labels.txt"), header=FALSE, 
                          stringsAsFactors=TRUE,
-                         col.names=c("activityLableId", "activityLableName"))
+                         col.names=c("activityLabelId", "activityLabelName"))
 
 # merge/bind test and train dataset by row
 data <- rbind(read.and.create("test", filter.data.cols), 
@@ -87,8 +87,8 @@ colnames(data) <- data.cols.n
 
 # Uses descriptive activity names to name the activities in the data set
 # by using a join/merge
-data <- merge(data, activityDF, by="activityLableId")
-data$activityLableId <- NULL   # activityLableId not needed anymore
+data <- merge(data, activityDF, by="activityLabelId")
+data$activityLabelId <- NULL   # activityLabelId not needed anymore
 
 # using the reshape2 package for melting and dcasting
 if (!"reshape2" %in% installed.packages()) install.packages(reshape2)
@@ -97,12 +97,12 @@ library(reshape2)
 # Creates a second, independent tidy data set with the average of each variable
 # for each activity and each subject by using melt() and dcast().
 # melting the data
-m.ids = c("subjectId", "activityLableName")
+m.ids = c("subjectId", "activityLabelName")
 m.vars = data.cols.n[1:(length(data.cols.n)-2)]   # all columns except the ids
 m.data <- melt(data, id=m.ids, measure.vars=m.vars)
 
 # rebuild the data and calculate the average of each variable for each activity
-tidy.data <- dcast(m.data, subjectId + activityLableName ~ variable, mean)    
+tidy.data <- dcast(m.data, subjectId + activityLabelName ~ variable, mean)    
 
 # remove melted data out of memory
 rm("m.data")

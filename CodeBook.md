@@ -51,22 +51,117 @@ kurtosis(): kurtosis of the frequency domain signal
 bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
 angle(): Angle between to vectors.
 
-## Used set of Variables for this Project
+[source of the data](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/)
+[Human Activity Recognition Using Smartphones Data Set](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones)
+
+## Used set of Variables and measurements
 
 mean(): Mean value
 std(): Standard deviation
 
-So only the mean and standard deviation variables were used for the tidy data set (result of the `run_analysis.R` script)
+So only the **mean** and **standard deviation** variables were used for the tidy data set (result of the `run_analysis.R` script)
 
-## Data Transformation (step by step)
+## Data that are not used
+
+* 'Inertial Signals/total_acc_x_<train|test>.txt': The acceleration signal from the smartphone accelerometer X axis in standard gravity units 'g'.
+* 'Inertial Signals/body_acc_x_<train|test>.txt': The body acceleration signal obtained by subtracting the gravity from the total acceleration. 
+* 'Inertial Signals/body_gyro_x_<train|test>.txt': The angular velocity vector measured by the gyroscope for each window sample.
+
+## Data Transformation using the R script (step by step)
 
 1. If the original Data are not in the Working Directory, download the data and unzip it to the `UCI HAR Dataset` directory automatically.
-2. For each fileset (training and testset)
-2.a Read the activity label id file (y_train.txt and y_test.txt) into a dataframe
-2.b Read the subject id file (subject_train.txt and subject_test.txt) into a dataframe
+2. Read the features.txt file into the featureDF dataframe to use it later as column name for the tidy dataset and use only the mean and std variables
+3. Extract activity labels into the dataframe activityDF
+4. For each fileset (the training set and the test set)
+	- Read the activity label id file (train/y_train.txt and test/y_test.txt) into the yData dataframe
+	- Read the subject id file (train/subject_train.txt and test/subject_test.txt) into the subject dataframe
+	- Read the measurements file (train/X_train.txt and test/X_test.txt) into the xData dataframe
+	- Assign the featureDF as column names of the measurement dataframe
+	- subset only the mean and standard deviation columns of the measurement dataframe using the filtered featureDF (save memory)
+	- add the activity label id and the subject id to the xData
+	- all this substeps are realised by the read.and.create() function
+5. merge respectively bind the training and test set by row
+6. beautify the column names using the [CamelCase Syntax](http://en.wikipedia.org/wiki/CamelCase "CamelCase@Wiki")
+	- eliminate parentheses
+	- eliminate hyphen-minus
+	- replace 't' at the beginning of the column name with 'time' (meaning time domain)
+	- replace 'f' at the beginning of the column name with 'freq' (meaning frequency domain)
+7. join the measurements dataframe xData with the activityDF by activity label id (corresponds to `SELECT * FROM xData, activityDF WHERE xData.activitylabelId = activityDF.activitylabelId`)
+8. melting the data with the melt() function in the reshape2 package (if not installed, the script will download and install the package) by the two id variables subjectId and activitylabelName
+9. calculate the average of each measure variable for each activity and rebuild the tidy data with the dcast() function (also part of the the reshape2 package)
+10. delete the melted dataframe (no use anymore)
+11. write the tidy dataset to the working directory using a comma seppareated file format with no string quotes.
 
+## Used Variables in the tidy dataset
 
+* subjectId ... Subject ID of the 30 volunteers within an age bracket of 19-48 years.
+* activityLabelName ... Each person performed six activities (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING). These labels are generated with the join/merge as described at point 7 in the Transformation chapter.
 
-## Description of the Variables
-
-
+1. subjectId
+2. activityLableName
+3. timeBodyAccMeanX
+4. timeBodyAccMeanY
+5. timeBodyAccMeanZ
+6. timeBodyAccStdX
+7. timeBodyAccStdY
+8. timeBodyAccStdZ
+9. timeGravityAccMeanX
+10. timeGravityAccMeanY
+11. timeGravityAccMeanZ
+12. timeGravityAccStdX
+13. timeGravityAccStdY
+14. timeGravityAccStdZ
+15. timeBodyAccJerkMeanX
+16. timeBodyAccJerkMeanY
+17. timeBodyAccJerkMeanZ
+18. timeBodyAccJerkStdX
+19. timeBodyAccJerkStdY
+20. timeBodyAccJerkStdZ
+21. timeBodyGyroMeanX
+22. timeBodyGyroMeanY
+23. timeBodyGyroMeanZ
+24. timeBodyGyroStdX
+25. timeBodyGyroStdY
+26. timeBodyGyroStdZ
+27. timeBodyGyroJerkMeanX
+28. timeBodyGyroJerkMeanY
+29. timeBodyGyroJerkMeanZ
+30. timeBodyGyroJerkStdX
+31. timeBodyGyroJerkStdY
+32. timeBodyGyroJerkStdZ
+33. timeBodyAccMagMean
+34. timeBodyAccMagStd
+35. timeGravityAccMagMean
+36. timeGravityAccMagStd
+37. timeBodyAccJerkMagMean
+38. timeBodyAccJerkMagStd
+39. timeBodyGyroMagMean
+40. timeBodyGyroMagStd
+41. timeBodyGyroJerkMagMean
+42. timeBodyGyroJerkMagStd
+43. freqBodyAccMeanX
+44. freqBodyAccMeanY
+45. freqBodyAccMeanZ
+46. freqBodyAccStdX
+47. freqBodyAccStdY
+48. freqBodyAccStdZ
+49. freqBodyAccJerkMeanX
+50. freqBodyAccJerkMeanY
+51. freqBodyAccJerkMeanZ
+52. freqBodyAccJerkStdX
+53. freqBodyAccJerkStdY
+54. freqBodyAccJerkStdZ
+55. freqBodyGyroMeanX
+56. freqBodyGyroMeanY
+57. freqBodyGyroMeanZ
+58. freqBodyGyroStdX
+59. freqBodyGyroStdY
+60. freqBodyGyroStdZ
+61. freqBodyAccMagMean
+62. freqBodyAccMagStd
+63. freqBodyBodyAccJerkMagMean
+64. freqBodyBodyAccJerkMagStd
+65. freqBodyBodyGyroMagMean
+66. freqBodyBodyGyroMagStd
+67. freqBodyBodyGyroJerkMagMean
+68. freqBodyBodyGyroJerkMagStd
