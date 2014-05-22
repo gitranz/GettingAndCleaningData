@@ -25,7 +25,9 @@ Description of the
 Human Activity Recognition database built from the recordings of 30 subjects performing activities of daily living (ADL) while carrying a waist-mounted smartphone with embedded inertial sensors
 
 [1] [Project site at Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones "Human Activity Recognition Using Smartphones Data Set")
+
 [2] [Oiginal data set at Machine Learning Repository](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/ "UCI HAR Dataset.zip")
+
 [3] [Downloadable data for the course project](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip ""UCI HAR Dataset.zip")
 
 

@@ -13,61 +13,62 @@ Finally a Fast Fourier Transform (FFT) was applied to some of these signals prod
 These signals were used to estimate variables of the feature vector for each pattern:  
 '-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
 
-tBodyAcc-XYZ
-tGravityAcc-XYZ
-tBodyAccJerk-XYZ
-tBodyGyro-XYZ
-tBodyGyroJerk-XYZ
-tBodyAccMag
-tGravityAccMag
-tBodyAccJerkMag
-tBodyGyroMag
-tBodyGyroJerkMag
-fBodyAcc-XYZ
-fBodyAccJerk-XYZ
-fBodyGyro-XYZ
-fBodyAccMag
-fBodyAccJerkMag
-fBodyGyroMag
-fBodyGyroJerkMag
+- tBodyAcc-XYZ
+- tGravityAcc-XYZ
+- tBodyAccJerk-XYZ
+- tBodyGyro-XYZ
+- tBodyGyroJerk-XYZ
+- tBodyAccMag
+- tGravityAccMag
+- tBodyAccJerkMag
+- tBodyGyroMag
+- tBodyGyroJerkMag
+- fBodyAcc-XYZ
+- fBodyAccJerk-XYZ
+- fBodyGyro-XYZ
+- fBodyAccMag
+- fBodyAccJerkMag
+- fBodyGyroMag
+- fBodyGyroJerkMag
 
 The set of variables that were estimated from these signals are: 
 
-mean(): Mean value
-std(): Standard deviation
-mad(): Median absolute deviation 
-max(): Largest value in array
-min(): Smallest value in array
-sma(): Signal magnitude area
-energy(): Energy measure. Sum of the squares divided by the number of values. 
-iqr(): Interquartile range 
-entropy(): Signal entropy
-arCoeff(): Autorregresion coefficients with Burg order equal to 4
-correlation(): correlation coefficient between two signals
-maxInds(): index of the frequency component with largest magnitude
-meanFreq(): Weighted average of the frequency components to obtain a mean frequency
-skewness(): skewness of the frequency domain signal 
-kurtosis(): kurtosis of the frequency domain signal 
-bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
-angle(): Angle between to vectors.
+- mean(): Mean value
+- std(): Standard deviation
+- mad(): Median absolute deviation 
+- max(): Largest value in array
+- min(): Smallest value in array
+- sma(): Signal magnitude area
+- energy(): Energy measure. Sum of the squares divided by the number of values. 
+- iqr(): Interquartile range 
+- entropy(): Signal entropy
+- arCoeff(): Autorregresion coefficients with Burg order equal to 4
+- correlation(): correlation coefficient between two signals
+- maxInds(): index of the frequency component with largest magnitude
+- meanFreq(): Weighted average of the frequency components to obtain a mean frequency
+- skewness(): skewness of the frequency domain signal 
+- kurtosis(): kurtosis of the frequency domain signal 
+- bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
+- angle(): Angle between to vectors.
 
-[source of the data](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/)
 [Human Activity Recognition Using Smartphones Data Set](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones)
 
-## Used set of Variables and measurements
+[Data Source](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/)
 
-mean(): Mean value
-std(): Standard deviation
+## Used set of variables and measurements
+
+- mean(): Mean value
+- std(): Standard deviation
 
 So only the **mean** and **standard deviation** variables were used for the tidy data set (result of the `run_analysis.R` script)
 
-## Data that are not used
+## Not used Data
 
-* 'Inertial Signals/total_acc_x_<train|test>.txt': The acceleration signal from the smartphone accelerometer X axis in standard gravity units 'g'.
-* 'Inertial Signals/body_acc_x_<train|test>.txt': The body acceleration signal obtained by subtracting the gravity from the total acceleration. 
-* 'Inertial Signals/body_gyro_x_<train|test>.txt': The angular velocity vector measured by the gyroscope for each window sample.
+* 'Inertial Signals/total_acc_x_train|test.txt': The acceleration signal from the smartphone accelerometer X axis in standard gravity units 'g'.
+* 'Inertial Signals/body_acc_x_train|test.txt': The body acceleration signal obtained by subtracting the gravity from the total acceleration. 
+* 'Inertial Signals/body_gyro_x_train|test.txt': The angular velocity vector measured by the gyroscope for each window sample.
 
-## Data Transformation using the R script (step by step)
+## Data Transformation in the R script (step by step)
 
 1. If the original Data are not in the Working Directory, download the data and unzip it to the `UCI HAR Dataset` directory automatically.
 2. Read the features.txt file into the featureDF dataframe to use it later as column name for the tidy dataset and use only the mean and std variables
@@ -90,7 +91,7 @@ So only the **mean** and **standard deviation** variables were used for the tidy
 8. melting the data with the melt() function in the reshape2 package (if not installed, the script will download and install the package) by the two id variables subjectId and activitylabelName
 9. calculate the average of each measure variable for each activity and rebuild the tidy data with the dcast() function (also part of the the reshape2 package)
 10. delete the melted dataframe (no use anymore)
-11. write the tidy dataset to the working directory using a comma seppareated file format with no string quotes.
+11. write the tidy dataset to the working directory ("tidydataset.txt") using a comma seppareated file format with no string quotes.
 
 ## Used Variables in the tidy dataset
 
