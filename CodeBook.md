@@ -89,7 +89,7 @@ So only the **mean** and **standard deviation** variables were used for the tidy
 	- replace 'f' at the beginning of the column name with 'freq' (meaning frequency domain)
 7. Join the measurements dataframe xData with the activityDF by activity label id (corresponds to `SELECT * FROM xData, activityDF WHERE xData.activityLabelId = activityDF.activityLabelId`)
 8. Melting the data with the melt() function in the reshape2 package (if not installed, the script will download and install the package) by the two id variables subjectId and activityLabelName
-9. Calculate the average of each measure variable for each activity and rebuild the tidy data with the dcast() function (also part of the reshape2 package)
+9. Calculate the average of each measure variable for each activity and each subject and rebuild the tidy data with the dcast() function (also part of the reshape2 package)
 10. Delete the melted dataframe (no use anymore)
 11. Write the tidy dataset to the working directory ("tidydataset.txt") using a comma separated file format with no string quotes.
 
