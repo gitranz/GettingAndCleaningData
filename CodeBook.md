@@ -80,18 +80,18 @@ So only the **mean** and **standard deviation** variables were used for the tidy
 	- Assign the featureDF as column names of the measurement dataframe
 	- subset only the mean and standard deviation columns of the measurement dataframe using the filtered featureDF (save memory)
 	- add the activity label id and the subject id to the xData
-	- all this substeps are realised by the read.and.create() function
-5. merge respectively bind the training and test set by row
-6. beautify the column names by using the [CamelCase Syntax](http://en.wikipedia.org/wiki/CamelCase "CamelCase@Wiki")
+	- all this substeps are realized by the read.and.create() function
+5. Merge respectively bind the training and test set by row
+6. Beautify the column names by using the [CamelCase Syntax](http://en.wikipedia.org/wiki/CamelCase "CamelCase@Wiki")
 	- eliminate parentheses
 	- eliminate hyphen-minus
 	- replace 't' at the beginning of the column name with 'time' (meaning time domain)
 	- replace 'f' at the beginning of the column name with 'freq' (meaning frequency domain)
-7. join the measurements dataframe xData with the activityDF by activity label id (corresponds to `SELECT * FROM xData, activityDF WHERE xData.activityLabelId = activityDF.activityLabelId`)
-8. melting the data with the melt() function in the reshape2 package (if not installed, the script will download and install the package) by the two id variables subjectId and activitylabelName
-9. calculate the average of each measure variable for each activity and rebuild the tidy data with the dcast() function (also part of the reshape2 package)
-10. delete the melted dataframe (no use anymore)
-11. write the tidy dataset to the working directory ("tidydataset.txt") using a comma seppareated file format with no string quotes.
+7. Join the measurements dataframe xData with the activityDF by activity label id (corresponds to `SELECT * FROM xData, activityDF WHERE xData.activityLabelId = activityDF.activityLabelId`)
+8. Melting the data with the melt() function in the reshape2 package (if not installed, the script will download and install the package) by the two id variables subjectId and activityLabelName
+9. Calculate the average of each measure variable for each activity and rebuild the tidy data with the dcast() function (also part of the reshape2 package)
+10. Delete the melted dataframe (no use anymore)
+11. Write the tidy dataset to the working directory ("tidydataset.txt") using a comma separated file format with no string quotes.
 
 ## Variables in the tidy dataset
 
